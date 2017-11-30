@@ -1,0 +1,45 @@
+//
+//  ShuDu-Prefix.pch
+//  ShuDu
+//
+//  Created by 邵帅 on 2017/11/17.
+//  Copyright © 2017年 邵帅. All rights reserved.
+//
+
+#ifndef ShuDu_Prefix_pch
+#define ShuDu_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <Masonry/Masonry.h>
+#import "SSUtils.h"
+
+#pragma mark - Color Define -
+
+#define UIRGBAColor(r, g, b, a)                     [UIColor colorWithRed:(CGFloat)r/255.f green:(CGFloat)g/255.f blue:(CGFloat)b/255.f alpha:(CGFloat)a]
+#define UIRGBColor(red, green, blue)                UIRGBAColor(red, green, blue, 1)
+#define UIRGBColor_0x(value)                        UIRGBColor(((value & 0xFF0000) >> 16), ((value & 0xFF00) >> 4), (value & 0xFF))
+
+#define kNavigationBarTintColor                     UIRGBColor(253, 154, 168)
+#define kDefaultBackgroundColor                     UIRGBColor(250, 250, 250)
+#define kTabBarItemTitleNormalColor                 UIRGBColor(157, 157, 157)
+#define kTabBarItemTitleSelectedColor               kNavigationBarTintColor
+
+#define kDarkColor                                  [UIColor blackColor]
+#define kLightColor                                 [UIColor lightGrayColor]
+#define kNormalColor                                [UIColor whiteColor]
+#define kNoneColor                                  [UIColor clearColor]
+#define kThemeColor                                 UIRGBColor(226, 29, 41)
+
+
+#pragma mark - Frame Define -
+
+#define kScreenWidth        [UIScreen mainScreen].bounds.size.width
+#define kScreenHeigh        [UIScreen mainScreen].bounds.size.height
+
+#define UIFontSystemSize(size) [SSUtils customSystemFontOfSize:size]
+
+#define SD(key)             NSLocalizedStringFromTable(key, @"Localizable", nil)
+
+#endif /* ShuDu_Prefix_pch */

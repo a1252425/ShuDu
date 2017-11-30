@@ -1,0 +1,17 @@
+//
+//  SSUtils.h
+//  ShuDu
+//
+//  Created by 邵帅 on 2017/11/17.
+//  Copyright © 2017年 邵帅. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface SSUtils : NSObject
+
++ (NSString *)dateToString:(NSDate *)date;
+
++ (UIFont *)customSystemFontOfSize:(CGFloat)fontSize;
+
+@end

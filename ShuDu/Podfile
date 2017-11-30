@@ -1,0 +1,11 @@
+use_frameworks!
+
+platform :ios, ‘9.0’
+
+target ’ShuDu’ do 
+
+pod ’Masonry’
+pod ’MJRefresh’
+pod ‘FMDB’
+
+end
