@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "SDFileManager.h"
 
 @interface AppDelegate ()
 
@@ -27,6 +28,8 @@
     _window.rootViewController = _viewController;
     
     [_window makeKeyAndVisible];
+    
+    [[SDFileManager sharedInstance] componentsOfRoot];
     
     return YES;
 }

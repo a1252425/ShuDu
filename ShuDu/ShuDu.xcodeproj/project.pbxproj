@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D79F7A251FCFE4140043A593 /* SDFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A241FCFE4140043A593 /* SDFileManager.m */; };
+		D79F7A271FCFFBFF0043A593 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D79F7A261FCFFBFF0043A593 /* libsqlite3.0.tbd */; };
 		D7A01DA41FBE961F00798009 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7A01DA31FBE961F00798009 /* AppDelegate.m */; };
 		D7A01DA71FBE961F00798009 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7A01DA61FBE961F00798009 /* ViewController.m */; };
 		D7A01DAC1FBE961F00798009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7A01DAB1FBE961F00798009 /* Assets.xcassets */; };
@@ -51,6 +53,9 @@
 		200B48B05B58B07CA97C8CA3 /* Pods-ShuDu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShuDu.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShuDu/Pods-ShuDu.release.xcconfig"; sourceTree = "<group>"; };
 		685A850E9E3EE4C3E1784836 /* Pods_ShuDu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShuDu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788EC09448FA02E5BC089C69 /* Pods-ShuDu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShuDu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShuDu/Pods-ShuDu.debug.xcconfig"; sourceTree = "<group>"; };
+		D79F7A231FCFE4140043A593 /* SDFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDFileManager.h; sourceTree = "<group>"; };
+		D79F7A241FCFE4140043A593 /* SDFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDFileManager.m; sourceTree = "<group>"; };
+		D79F7A261FCFFBFF0043A593 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		D7A01D9F1FBE961F00798009 /* ShuDu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuDu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A01DA21FBE961F00798009 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D7A01DA31FBE961F00798009 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -132,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D79F7A271FCFFBFF0043A593 /* libsqlite3.0.tbd in Frameworks */,
 				F686A6120363F26926F5F6D4 /* Pods_ShuDu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +157,7 @@
 		76F0C7B4FC3F4BFE3D336BD9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D79F7A261FCFFBFF0043A593 /* libsqlite3.0.tbd */,
 				685A850E9E3EE4C3E1784836 /* Pods_ShuDu.framework */,
 			);
 			name = Frameworks;
@@ -409,6 +416,8 @@
 				D7FA48561FC554460005CD75 /* SDFileAddItemModel.h */,
 				D7FA48571FC554460005CD75 /* SDFileAddItemModel.m */,
 				D7FA485F1FC5611E0005CD75 /* SDFileProtocol.h */,
+				D79F7A231FCFE4140043A593 /* SDFileManager.h */,
+				D79F7A241FCFE4140043A593 /* SDFileManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -677,6 +686,7 @@
 				D7A01E071FBEB37F00798009 /* SDImage.m in Sources */,
 				D7FA48481FC529BB0005CD75 /* UIViewController+NavigationBarButton.m in Sources */,
 				D7A01E781FBECED100798009 /* SDFileViewModel.m in Sources */,
+				D79F7A251FCFE4140043A593 /* SDFileManager.m in Sources */,
 				D7FA48461FC529BB0005CD75 /* UITextField+Check.m in Sources */,
 				D7A01E961FBED01500798009 /* SDSettingViewController.m in Sources */,
 				D7A01E1E1FBEC6C900798009 /* SSViewController.m in Sources */,
