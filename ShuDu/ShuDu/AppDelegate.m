@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "SDFileManager.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+        
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     _viewController = [[ViewController alloc] init];
@@ -28,8 +27,6 @@
     _window.rootViewController = _viewController;
     
     [_window makeKeyAndVisible];
-    
-    [[SDFileManager sharedInstance] componentsOfRoot];
     
     return YES;
 }

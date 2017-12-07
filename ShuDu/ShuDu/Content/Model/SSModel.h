@@ -18,6 +18,8 @@
 
 - (NSDictionary *)dictionaryRepresentation;
 
+- (NSArray *)allPropertyNames;
+
 @end
 
 @interface SSModel : NSObject <NSCopying, NSCoding>

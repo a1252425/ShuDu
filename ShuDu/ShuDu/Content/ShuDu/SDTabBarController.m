@@ -27,7 +27,7 @@
     
     NSArray<NSString *> *titles = @[SD(@"舒读"), SD(@"传输"), SD(@"设置")];
     
-    SDHomeViewController *homeViewController = [[SDHomeViewController alloc] init];
+    SDHomeViewController *homeViewController = [[SDHomeViewController alloc] initWithFile:NULL];
     SSNavigationController *homeController = [[SSNavigationController alloc] initWithRootViewController:homeViewController];
     homeController.tabBarItem = [[UITabBarItem alloc] initWithTitle:titles[0] image:[SDImage root_tab_bar_item0] tag:0];
     

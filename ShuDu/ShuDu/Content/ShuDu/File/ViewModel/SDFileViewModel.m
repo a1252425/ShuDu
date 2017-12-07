@@ -8,7 +8,15 @@
 
 #import "SDFileViewModel.h"
 #import "SDFileAddItemModel.h"
+#import "SDFileManager.h"
 #import "SDImage.h"
+
+#import "SDFileModel.h"
+
+#import "SDFileViewController.h"
+
+//  TXT阅读器
+#import "SDTXTReaderViewController.h"
 
 @implementation SDFileViewModel
 
@@ -52,8 +60,24 @@
     return 44 + [UIApplication sharedApplication].statusBarFrame.size.height;
 }
 
-- (void)loadFilesAtComponent:(id)component {
-    
+- (instancetype)initWithFile:(SDFileModel *)fileModel {
+    if (self = [super init]) {
+        _files = [[SDFileManager sharedInstance] componentsOfFile:fileModel];
+    }
+    return self;
+}
+
+- (void)viewController:(SDFileViewController *)controller openFile:(SDFileModel *)fileModel {
+    if (fileModel.type == SDFileTypeDirectory) {
+        SDFileViewController *nextDirectoryController = [[SDFileViewController alloc] initWithFile:fileModel];
+        [controller.navigationController pushViewController:nextDirectoryController animated:YES];
+    }
+    else if (fileModel.type == SDFileTypeTxt) {
+        SDTXTReaderViewController *txtReaderController = [[SDTXTReaderViewController alloc] initWithFile:fileModel];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [controller presentViewController:txtReaderController animated:YES completion:NULL];
+        });
+    }
 }
 
 @end

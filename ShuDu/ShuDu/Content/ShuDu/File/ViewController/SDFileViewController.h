@@ -8,6 +8,10 @@
 
 #import "SSViewController.h"
 
+@class SDFileModel;
+
 @interface SDFileViewController : SSViewController
+
+- (instancetype)initWithFile:(SDFileModel *)fileModel;
 
 @end

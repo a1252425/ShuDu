@@ -8,7 +8,7 @@
 
 #import "SSViewModel.h"
 
-@class SDFileAddItemModel, SDFileModel;
+@class SDFileAddItemModel, SDFileModel, SDFileViewController;
 
 @interface SDFileViewModel : SSViewModel
 
@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) NSArray<SDFileModel *> *files;
 
-- (void)loadFilesAtComponent:(id)component;
+- (instancetype)initWithFile:(SDFileModel *)fileModel;
+
+- (void)viewController:(SDFileViewController *)controller openFile:(SDFileModel *)fileModel;
 
 @end

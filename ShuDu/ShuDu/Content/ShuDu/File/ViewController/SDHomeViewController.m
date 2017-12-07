@@ -7,6 +7,7 @@
 //
 
 #import "SDHomeViewController.h"
+#import "SDFileManager.h"
 
 @interface SDHomeViewController ()
 
@@ -18,7 +19,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationItem.title = SD(@"舒读");
+//    self.navigationItem.title = SD(@"舒读");
+    
+//    SDFileManager *manager = [SDFileManager sharedInstance];
+//    [[SDFileManager sharedInstance] component:[[SDFileManager sharedInstance] rootComponent] addFile:[[NSBundle mainBundle] pathForResource:@"火影" ofType:@"txt"] error:nil];
 }
 
 - (void)didReceiveMemoryWarning {

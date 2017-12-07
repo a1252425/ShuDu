@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, SDFileType) {
     SDFileTypeAudio,
     
     SDFileTypeRar,
+    SDFileTypeZip,
 };
 
 @interface SDFileModel : SSModel
@@ -37,6 +38,10 @@ typedef NS_ENUM(NSInteger, SDFileType) {
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, copy) NSString *md5;
 @property (nonatomic, assign) SDFileType type;
+
 @property (nonatomic, copy) NSString *extension;
+@property (nonatomic, copy) NSString *fileRealPath;
+
+- (BOOL)isMemberOf:(SDFileModel *)component;
 
 @end

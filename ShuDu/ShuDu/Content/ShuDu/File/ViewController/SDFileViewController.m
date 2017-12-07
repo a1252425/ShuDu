@@ -11,18 +11,30 @@
 #import "SDFileAddCell.h"
 #import "SDFileCell.h"
 #import "UIView+Line.h"
+#import "SDFileModel.h"
+#import "SDFileManager.h"
 
 @interface SDFileViewController () <UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 {
+    UIView *_topView;
+    BOOL _topShowing, _dragging;
     UICollectionView *_collectionView;
     UITableView *_tableView;
     
     SDFileViewModel *_viewModel;
+    SDFileModel *_fileModel;
 }
 
 @end
 
 @implementation SDFileViewController
+
+- (instancetype)initWithFile:(SDFileModel *)fileModel {
+    if (self = [super init]) {
+        _fileModel = fileModel;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,7 +42,34 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    _viewModel = [[SDFileViewModel alloc] init];
+    if (!_fileModel) {
+        _fileModel = [[SDFileManager sharedInstance] rootComponent];
+    }
+    
+    self.navigationItem.title = _fileModel.name;
+    
+    _viewModel = [[SDFileViewModel alloc] initWithFile:_fileModel];
+    
+    [self loadFileView];
+    [self loadTopView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSLog(@"%@", NSStringFromUIEdgeInsets(_tableView.contentInset));
+}
+
+- (void)loadTopView {
+    _topView = [[UIView alloc] init];
+    _topView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_topView];
+    
+    [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(_viewModel.fileAddViewOrignalY);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(_viewModel.fileAddViewHeight);
+    }];
     
     //  添加文件页面
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -40,20 +79,22 @@
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.showsHorizontalScrollIndicator = NO;
-    if (@available(ios 11.0, *)) {
+    if (@available(iOS 11.0, *)) {
         _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     [_collectionView registerClass:[SDFileAddCell class] forCellWithReuseIdentifier:@"SDFileAddCell"];
-    [self.view addSubview:_collectionView];
+    [_topView addSubview:_collectionView];
     
     [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(_viewModel.fileAddViewOrignalY);
-        make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(_viewModel.fileAddViewHeight);
+        make.edges.equalTo(_topView);
     }];
     
-    [_collectionView showLine:SSLinePositionTop|SSLinePositionBottom];
+    [_topView showLine:SSLinePositionBottom];
     
+    _topView.layer.opacity = 0;
+}
+
+- (void)loadFileView {
     //  文件列表
     _tableView = [[UITableView alloc] init];
     _tableView.delegate = self;
@@ -69,8 +110,8 @@
     [self.view addSubview:_tableView];
     
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.right.equalTo(self.view);
-        make.top.equalTo(_collectionView.mas_bottom);
+        make.left.right.bottom.equalTo(self.view);
+        make.top.equalTo(self.view).offset(_viewModel.fileAddViewOrignalY);
     }];
 }
 
@@ -127,11 +168,91 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [_viewModel viewController:self openFile:_viewModel.files[indexPath.row]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return kFileCellHeight;
 }
+
+#pragma mark - UIScrollViewDelegate -
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:_collectionView]) {
+        return;
+    }
+    _dragging = YES;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:_collectionView] || !_dragging) {
+        return;
+    }
+    
+    CGFloat progress = scrollView.contentOffset.y;
+    CGFloat franction = (-progress)/_viewModel.fileAddViewHeight;
+    franction = MAX(MIN(franction, 1), 0);
+    CGFloat displacement = - (_viewModel.fileAddViewHeight + progress)/2;
+    displacement = MAX(MIN(displacement, 0), -_viewModel.fileAddViewHeight/2);
+    
+    CATransform3D transform = CATransform3DConcat(CATransform3DMakeRotation(acos(franction), 1, 0, 0), CATransform3DMakeTranslation(0, displacement, 0));
+    _topView.layer.transform = transform;
+    _topView.layer.opacity = franction;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if ([scrollView isEqual:_collectionView]) {
+        return;
+    }
+    _dragging = NO;
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:_collectionView]) {
+        return;
+    }
+    CGFloat progress = scrollView.contentOffset.y;
+    CGFloat franction = - progress/_viewModel.fileAddViewHeight;
+    franction = MAX(MIN(franction, 1), 0);
+    if (_topShowing) {
+        if (progress > 0) {
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                _tableView.contentInset = UIEdgeInsetsZero;
+                _topView.layer.transform = CATransform3DConcat(CATransform3DMakeRotation(acos(1), 0, 1, 0), CATransform3DMakeTranslation(0, -_viewModel.fileAddViewHeight/2, 0));
+                _topView.layer.opacity = 0;
+            } completion:^(BOOL finished) {
+                _topShowing = NO;
+            }];
+        }else {
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                _topView.layer.transform = CATransform3DIdentity;
+                _topView.layer.opacity = 1;
+            } completion:^(BOOL finished) {
+                _topShowing = YES;
+            }];
+        }
+    }
+    else {
+        if (franction >= 0.618) {
+            UIEdgeInsets insets = UIEdgeInsetsZero;
+            insets.top += _viewModel.fileAddViewHeight;
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                _tableView.contentInset = insets;
+                _topView.layer.transform = CATransform3DIdentity;
+                _topView.layer.opacity = 1;
+            } completion:^(BOOL finished) {
+                _topShowing = YES;
+            }];
+        }
+        else{
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                _topView.layer.transform = CATransform3DConcat(CATransform3DMakeRotation(acos(1), 0, 1, 0), CATransform3DMakeTranslation(0, -_viewModel.fileAddViewHeight/2, 0));
+                _topView.layer.opacity = 0;
+            } completion:NULL];
+        }
+    }
+}
+
+#pragma mark - end
 
 @end

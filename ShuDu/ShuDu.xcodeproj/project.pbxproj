@@ -9,6 +9,22 @@
 /* Begin PBXBuildFile section */
 		D79F7A251FCFE4140043A593 /* SDFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A241FCFE4140043A593 /* SDFileManager.m */; };
 		D79F7A271FCFFBFF0043A593 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D79F7A261FCFFBFF0043A593 /* libsqlite3.0.tbd */; };
+		D79F7A2C1FD4F5160043A593 /* 遮天2.txt in Resources */ = {isa = PBXBuildFile; fileRef = D79F7A291FD4F5160043A593 /* 遮天2.txt */; };
+		D79F7A2D1FD4F5160043A593 /* 遮天1.txt in Resources */ = {isa = PBXBuildFile; fileRef = D79F7A2A1FD4F5160043A593 /* 遮天1.txt */; };
+		D79F7A2E1FD4F5160043A593 /* 火影.txt in Resources */ = {isa = PBXBuildFile; fileRef = D79F7A2B1FD4F5160043A593 /* 火影.txt */; };
+		D79F7A371FD54BFF0043A593 /* SDTXTReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A361FD54BFF0043A593 /* SDTXTReaderViewController.m */; };
+		D79F7A3A1FD54C200043A593 /* SDTXTReaderViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A391FD54C200043A593 /* SDTXTReaderViewModel.m */; };
+		D79F7A3D1FD645480043A593 /* SDTXTChapterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A3C1FD645480043A593 /* SDTXTChapterModel.m */; };
+		D79F7A401FD6740D0043A593 /* SDTXTConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A3F1FD6740D0043A593 /* SDTXTConfigModel.m */; };
+		D79F7A431FD67FB80043A593 /* SDTXTPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A421FD67FB80043A593 /* SDTXTPageModel.m */; };
+		D79F7A461FD6838B0043A593 /* SDTXTReaderPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A451FD6838B0043A593 /* SDTXTReaderPageViewController.m */; };
+		D79F7A491FD683F60043A593 /* SDTXTReaderPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A481FD683F60043A593 /* SDTXTReaderPageView.m */; };
+		D79F7A4C1FD69F340043A593 /* SDTXTRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A4B1FD69F340043A593 /* SDTXTRecordModel.m */; };
+		D79F7A531FD7D87E0043A593 /* SDTXTReaderLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A521FD7D87E0043A593 /* SDTXTReaderLayoutView.m */; };
+		D79F7A561FD7D9060043A593 /* SDTXTReaderTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A551FD7D9060043A593 /* SDTXTReaderTopView.m */; };
+		D79F7A621FD8D0BB0043A593 /* SDTXTReaderBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A5D1FD8D0BB0043A593 /* SDTXTReaderBottomView.m */; };
+		D79F7A651FD8DD310043A593 /* SDTXTReaderMarkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A641FD8DD310043A593 /* SDTXTReaderMarkModel.m */; };
+		D79F7A681FD8ED060043A593 /* SDTXTReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D79F7A671FD8ED060043A593 /* SDTXTReaderView.m */; };
 		D7A01DA41FBE961F00798009 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7A01DA31FBE961F00798009 /* AppDelegate.m */; };
 		D7A01DA71FBE961F00798009 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7A01DA61FBE961F00798009 /* ViewController.m */; };
 		D7A01DAC1FBE961F00798009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7A01DAB1FBE961F00798009 /* Assets.xcassets */; };
@@ -56,6 +72,37 @@
 		D79F7A231FCFE4140043A593 /* SDFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDFileManager.h; sourceTree = "<group>"; };
 		D79F7A241FCFE4140043A593 /* SDFileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDFileManager.m; sourceTree = "<group>"; };
 		D79F7A261FCFFBFF0043A593 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		D79F7A291FD4F5160043A593 /* 遮天2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "遮天2.txt"; sourceTree = "<group>"; };
+		D79F7A2A1FD4F5160043A593 /* 遮天1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "遮天1.txt"; sourceTree = "<group>"; };
+		D79F7A2B1FD4F5160043A593 /* 火影.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "火影.txt"; sourceTree = "<group>"; };
+		D79F7A351FD54BFF0043A593 /* SDTXTReaderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderViewController.h; sourceTree = "<group>"; };
+		D79F7A361FD54BFF0043A593 /* SDTXTReaderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderViewController.m; sourceTree = "<group>"; };
+		D79F7A381FD54C200043A593 /* SDTXTReaderViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderViewModel.h; sourceTree = "<group>"; };
+		D79F7A391FD54C200043A593 /* SDTXTReaderViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderViewModel.m; sourceTree = "<group>"; };
+		D79F7A3B1FD645480043A593 /* SDTXTChapterModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTChapterModel.h; sourceTree = "<group>"; };
+		D79F7A3C1FD645480043A593 /* SDTXTChapterModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTChapterModel.m; sourceTree = "<group>"; };
+		D79F7A3E1FD6740D0043A593 /* SDTXTConfigModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTConfigModel.h; sourceTree = "<group>"; };
+		D79F7A3F1FD6740D0043A593 /* SDTXTConfigModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTConfigModel.m; sourceTree = "<group>"; };
+		D79F7A411FD67FB80043A593 /* SDTXTPageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTPageModel.h; sourceTree = "<group>"; };
+		D79F7A421FD67FB80043A593 /* SDTXTPageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTPageModel.m; sourceTree = "<group>"; };
+		D79F7A441FD6838B0043A593 /* SDTXTReaderPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderPageViewController.h; sourceTree = "<group>"; };
+		D79F7A451FD6838B0043A593 /* SDTXTReaderPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderPageViewController.m; sourceTree = "<group>"; };
+		D79F7A471FD683F60043A593 /* SDTXTReaderPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderPageView.h; sourceTree = "<group>"; };
+		D79F7A481FD683F60043A593 /* SDTXTReaderPageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderPageView.m; sourceTree = "<group>"; };
+		D79F7A4A1FD69F340043A593 /* SDTXTRecordModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTRecordModel.h; sourceTree = "<group>"; };
+		D79F7A4B1FD69F340043A593 /* SDTXTRecordModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTRecordModel.m; sourceTree = "<group>"; };
+		D79F7A511FD7D87E0043A593 /* SDTXTReaderLayoutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderLayoutView.h; sourceTree = "<group>"; };
+		D79F7A521FD7D87E0043A593 /* SDTXTReaderLayoutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderLayoutView.m; sourceTree = "<group>"; };
+		D79F7A541FD7D9060043A593 /* SDTXTReaderTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderTopView.h; sourceTree = "<group>"; };
+		D79F7A551FD7D9060043A593 /* SDTXTReaderTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderTopView.m; sourceTree = "<group>"; };
+		D79F7A5D1FD8D0BB0043A593 /* SDTXTReaderBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderBottomView.m; sourceTree = "<group>"; };
+		D79F7A5E1FD8D0BB0043A593 /* SDTXTReaderBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderBottomView.h; sourceTree = "<group>"; };
+		D79F7A601FD8D0BB0043A593 /* SDTXTReaderLayoutProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderLayoutProtocol.h; sourceTree = "<group>"; };
+		D79F7A611FD8D0BB0043A593 /* SDTXTReaderAmiatedProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderAmiatedProtocol.h; sourceTree = "<group>"; };
+		D79F7A631FD8DD310043A593 /* SDTXTReaderMarkModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderMarkModel.h; sourceTree = "<group>"; };
+		D79F7A641FD8DD310043A593 /* SDTXTReaderMarkModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderMarkModel.m; sourceTree = "<group>"; };
+		D79F7A661FD8ED060043A593 /* SDTXTReaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDTXTReaderView.h; sourceTree = "<group>"; };
+		D79F7A671FD8ED060043A593 /* SDTXTReaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDTXTReaderView.m; sourceTree = "<group>"; };
 		D7A01D9F1FBE961F00798009 /* ShuDu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuDu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A01DA21FBE961F00798009 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D7A01DA31FBE961F00798009 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -163,6 +210,115 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D79F7A281FD4F5160043A593 /* TXT */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A291FD4F5160043A593 /* 遮天2.txt */,
+				D79F7A2A1FD4F5160043A593 /* 遮天1.txt */,
+				D79F7A2B1FD4F5160043A593 /* 火影.txt */,
+			);
+			path = TXT;
+			sourceTree = "<group>";
+		};
+		D79F7A2F1FD54BD60043A593 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A301FD54BD60043A593 /* TxtReader */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		D79F7A301FD54BD60043A593 /* TxtReader */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A311FD54BD60043A593 /* ViewModel */,
+				D79F7A321FD54BD60043A593 /* Model */,
+				D79F7A331FD54BD60043A593 /* View */,
+				D79F7A341FD54BD60043A593 /* ViewController */,
+			);
+			path = TxtReader;
+			sourceTree = "<group>";
+		};
+		D79F7A311FD54BD60043A593 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A381FD54C200043A593 /* SDTXTReaderViewModel.h */,
+				D79F7A391FD54C200043A593 /* SDTXTReaderViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D79F7A321FD54BD60043A593 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A3B1FD645480043A593 /* SDTXTChapterModel.h */,
+				D79F7A3C1FD645480043A593 /* SDTXTChapterModel.m */,
+				D79F7A411FD67FB80043A593 /* SDTXTPageModel.h */,
+				D79F7A421FD67FB80043A593 /* SDTXTPageModel.m */,
+				D79F7A3E1FD6740D0043A593 /* SDTXTConfigModel.h */,
+				D79F7A3F1FD6740D0043A593 /* SDTXTConfigModel.m */,
+				D79F7A4A1FD69F340043A593 /* SDTXTRecordModel.h */,
+				D79F7A4B1FD69F340043A593 /* SDTXTRecordModel.m */,
+				D79F7A631FD8DD310043A593 /* SDTXTReaderMarkModel.h */,
+				D79F7A641FD8DD310043A593 /* SDTXTReaderMarkModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D79F7A331FD54BD60043A593 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A501FD7D87E0043A593 /* LayoutView */,
+				D79F7A471FD683F60043A593 /* SDTXTReaderPageView.h */,
+				D79F7A481FD683F60043A593 /* SDTXTReaderPageView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D79F7A341FD54BD60043A593 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A351FD54BFF0043A593 /* SDTXTReaderViewController.h */,
+				D79F7A361FD54BFF0043A593 /* SDTXTReaderViewController.m */,
+				D79F7A441FD6838B0043A593 /* SDTXTReaderPageViewController.h */,
+				D79F7A451FD6838B0043A593 /* SDTXTReaderPageViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D79F7A501FD7D87E0043A593 /* LayoutView */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A5C1FD8D0BB0043A593 /* Bottom */,
+				D79F7A5F1FD8D0BB0043A593 /* Protocol */,
+				D79F7A511FD7D87E0043A593 /* SDTXTReaderLayoutView.h */,
+				D79F7A521FD7D87E0043A593 /* SDTXTReaderLayoutView.m */,
+				D79F7A541FD7D9060043A593 /* SDTXTReaderTopView.h */,
+				D79F7A551FD7D9060043A593 /* SDTXTReaderTopView.m */,
+				D79F7A661FD8ED060043A593 /* SDTXTReaderView.h */,
+				D79F7A671FD8ED060043A593 /* SDTXTReaderView.m */,
+			);
+			path = LayoutView;
+			sourceTree = "<group>";
+		};
+		D79F7A5C1FD8D0BB0043A593 /* Bottom */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A5D1FD8D0BB0043A593 /* SDTXTReaderBottomView.m */,
+				D79F7A5E1FD8D0BB0043A593 /* SDTXTReaderBottomView.h */,
+			);
+			path = Bottom;
+			sourceTree = "<group>";
+		};
+		D79F7A5F1FD8D0BB0043A593 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D79F7A601FD8D0BB0043A593 /* SDTXTReaderLayoutProtocol.h */,
+				D79F7A611FD8D0BB0043A593 /* SDTXTReaderAmiatedProtocol.h */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		D7A01D961FBE961F00798009 = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +351,7 @@
 				D7A01DB11FBE961F00798009 /* main.m */,
 				D7A01E1B1FBEB3CF00798009 /* ShuDu-Prefix.pch */,
 				D7FA47FB1FBED4430005CD75 /* Localizable.strings */,
+				D79F7A281FD4F5160043A593 /* TXT */,
 			);
 			path = ShuDu;
 			sourceTree = "<group>";
@@ -253,6 +410,7 @@
 		D7A01DCB1FBEB37F00798009 /* ShuDu */ = {
 			isa = PBXGroup;
 			children = (
+				D79F7A2F1FD54BD60043A593 /* Tools */,
 				D7A01E301FBECE8800798009 /* File */,
 				D7A01E411FBECE8800798009 /* Setting */,
 				D7A01E521FBECE8800798009 /* Transfer */,
@@ -604,8 +762,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D79F7A2D1FD4F5160043A593 /* 遮天1.txt in Resources */,
 				D7A01DAF1FBE961F00798009 /* LaunchScreen.storyboard in Resources */,
 				D7FA47FC1FBED4430005CD75 /* Localizable.strings in Resources */,
+				D79F7A2C1FD4F5160043A593 /* 遮天2.txt in Resources */,
+				D79F7A2E1FD4F5160043A593 /* 火影.txt in Resources */,
 				D7A01DAC1FBE961F00798009 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,15 +836,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D79F7A431FD67FB80043A593 /* SDTXTPageModel.m in Sources */,
 				D7A01E811FBECF5300798009 /* SDFileViewController.m in Sources */,
 				D7A01E171FBEB37F00798009 /* SSTableView.m in Sources */,
 				D7FA48471FC529BB0005CD75 /* UIView+loading.m in Sources */,
 				D7A01E841FBECF6300798009 /* SDHomeViewController.m in Sources */,
+				D79F7A561FD7D9060043A593 /* SDTXTReaderTopView.m in Sources */,
 				D7A01E041FBEB37F00798009 /* SWIndividuation.m in Sources */,
 				D7A01E031FBEB37F00798009 /* SWAlert.m in Sources */,
 				D7A01E8D1FBECFB400798009 /* SDSettingModel.m in Sources */,
 				D7A01E021FBEB37F00798009 /* SSDeviceUILevel.m in Sources */,
 				D7A01E071FBEB37F00798009 /* SDImage.m in Sources */,
+				D79F7A3D1FD645480043A593 /* SDTXTChapterModel.m in Sources */,
+				D79F7A461FD6838B0043A593 /* SDTXTReaderPageViewController.m in Sources */,
+				D79F7A491FD683F60043A593 /* SDTXTReaderPageView.m in Sources */,
 				D7FA48481FC529BB0005CD75 /* UIViewController+NavigationBarButton.m in Sources */,
 				D7A01E781FBECED100798009 /* SDFileViewModel.m in Sources */,
 				D79F7A251FCFE4140043A593 /* SDFileManager.m in Sources */,
@@ -697,12 +863,20 @@
 				D7A01E2F1FBECDB600798009 /* SDTabBarController.m in Sources */,
 				D7A01E871FBECF8300798009 /* SDSettingViewModel.m in Sources */,
 				D7A01E271FBEC7F300798009 /* SSUtils.m in Sources */,
+				D79F7A531FD7D87E0043A593 /* SDTXTReaderLayoutView.m in Sources */,
 				D7A01E061FBEB37F00798009 /* SDImageUtils.m in Sources */,
 				D7A01DA71FBE961F00798009 /* ViewController.m in Sources */,
 				D7A01E901FBECFCC00798009 /* SDTransferModel.m in Sources */,
 				D7A01DB21FBE961F00798009 /* main.m in Sources */,
+				D79F7A3A1FD54C200043A593 /* SDTXTReaderViewModel.m in Sources */,
+				D79F7A681FD8ED060043A593 /* SDTXTReaderView.m in Sources */,
 				D7A01E2C1FBECA2F00798009 /* SSModel.m in Sources */,
+				D79F7A651FD8DD310043A593 /* SDTXTReaderMarkModel.m in Sources */,
+				D79F7A4C1FD69F340043A593 /* SDTXTRecordModel.m in Sources */,
+				D79F7A401FD6740D0043A593 /* SDTXTConfigModel.m in Sources */,
+				D79F7A371FD54BFF0043A593 /* SDTXTReaderViewController.m in Sources */,
 				D7FA48581FC554460005CD75 /* SDFileAddItemModel.m in Sources */,
+				D79F7A621FD8D0BB0043A593 /* SDTXTReaderBottomView.m in Sources */,
 				D7A01E211FBEC78B00798009 /* SSNavigationController.m in Sources */,
 				D7A01E051FBEB37F00798009 /* SDImageStorage.m in Sources */,
 				D7A01E8A1FBECF9100798009 /* SDTransferViewModel.m in Sources */,

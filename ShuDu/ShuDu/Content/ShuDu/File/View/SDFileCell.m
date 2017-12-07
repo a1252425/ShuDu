@@ -7,6 +7,8 @@
 //
 
 #import "SDFileCell.h"
+#import "SDFileModel.h"
+#import "SDImage.h"
 
 @interface SDFileCell ()
 {
@@ -62,6 +64,7 @@
         
         _detailImageView = [[UIImageView alloc] init];
         _detailImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _detailImageView.image = [SDImage detailImage];
         [contentView addSubview:_detailImageView];
         
         [_detailImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -104,7 +107,37 @@
 }
 
 - (void)setFileModel:(SDFileModel *)fileModel {
+    _nameLabel.text = fileModel.name;
     
+    switch (fileModel.type) {
+        case SDFileTypeDirectory:
+            _imageView.image = [SDImage txtFileImage];
+            break;
+          
+        case SDFileTypeTxt:
+            _imageView.image = [SDImage txtFileImage];
+            break;
+            
+        case SDFileTypeDoc:
+            _imageView.image = [SDImage wordFileImage];
+            break;
+            
+        case SDFileTypePPT:
+            _imageView.image = [SDImage pptFileImage];
+            break;
+            
+        case SDFileTypeExcel:
+            _imageView.image = [SDImage excelFileImage];
+            break;
+            
+        case SDFileTypeVideo:
+            _imageView.image = [SDImage videoImage];
+            break;
+            
+        default:
+            _imageView.image = [SDImage defaultFileImage];
+            break;
+    }
 }
 
 @end
