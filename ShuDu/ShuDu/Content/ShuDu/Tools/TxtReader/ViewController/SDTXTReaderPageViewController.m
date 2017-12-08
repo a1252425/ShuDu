@@ -40,8 +40,13 @@
     _pageView = [[SDTXTReaderPageView alloc] initWithContent:_pageModel.content];
     [self.view addSubview:_pageView];
     
+    UIEdgeInsets safeInsets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        safeInsets = [UIApplication sharedApplication].keyWindow.safeAreaInsets;
+    }
+    
     [_pageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.edges.equalTo(self.view).insets(safeInsets);
     }];
     
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -53,7 +58,7 @@
     UIEdgeInsets insets = [SDTXTConfigModel sharedInstance].contentInsets;
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(insets.left);
-        make.top.equalTo(self.view).offset(insets.top-20);
+        make.top.equalTo(self.view).offset(insets.top-20 + (safeInsets.top>0?(safeInsets.top-8):0));
     }];
     
     UILabel *chapterLabel = [[UILabel alloc] init];
@@ -64,7 +69,7 @@
     [self.view addSubview:chapterLabel];
     
     [chapterLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(insets.top-20);
+        make.top.equalTo(self.view).offset(insets.top-20 + (safeInsets.top>0?(safeInsets.top-8):0));
         make.right.equalTo(self.view).offset(-insets.right);
         make.width.equalTo(titleLabel);
     }];

@@ -12,8 +12,10 @@
 
 @interface SDTXTRecordModel : SSModel
 
+@property (nonatomic, assign) NSInteger chapterCount;
 @property (nonatomic, assign) NSInteger chapter;
 @property (nonatomic, assign) NSInteger page;
+
 @property (nonatomic, strong) NSArray<SDTXTReaderMarkModel *> *bookmarks;
 @property (nonatomic, weak) SDTXTChapterModel *chapterModel;
 

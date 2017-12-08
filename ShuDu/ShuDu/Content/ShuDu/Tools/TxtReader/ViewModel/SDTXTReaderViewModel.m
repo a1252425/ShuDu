@@ -36,6 +36,12 @@
         _chapter = 0;
         
         [self transforContentToChapters];
+        
+        _recordModel = [SDTXTRecordModel recordOfFile:_fileModel];
+        _recordModel.chapterCount = _chapters.count;
+        _chapter = _recordModel.chapter;
+        _page = _recordModel.page;
+        _recordModel.chapterModel = [self chapterAtIndex:_chapter];
     }
     return self;
 }
@@ -55,10 +61,6 @@
  */
 
 - (void)transforContentToChapters {
-    
-    _recordModel = [SDTXTRecordModel recordOfFile:_fileModel];
-    _chapter = _recordModel.chapter;
-    _page = _recordModel.page;
     
     NSError *error;
     NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:_fileModel.path];
@@ -93,18 +95,21 @@
         if (idx == 0) {
             SDTXTChapterModel *model = [[SDTXTChapterModel alloc] initWithTitle:_fileModel.name content:[content substringWithRange:NSMakeRange(0, location)]];
             model.fileModel = _fileModel;
+            model.chapter = idx;
             [chapters addObject:model];
         }
         else if (idx > 0) {
             NSUInteger len = location - chapterRange.location;
             SDTXTChapterModel *model = [[SDTXTChapterModel alloc] initWithTitle:[content substringWithRange:chapterRange] content:[content substringWithRange:NSMakeRange(chapterRange.location, len)]];
             model.fileModel = _fileModel;
+            model.chapter = idx;
             [chapters addObject:model];
         }
         if (idx == match.count-1) {
             NSUInteger len = content.length - location;
             SDTXTChapterModel *model = [[SDTXTChapterModel alloc] initWithTitle:[content substringWithRange:range] content:[content substringWithRange:NSMakeRange(location, len)]];
             model.fileModel = _fileModel;
+            model.chapter = match.count;
             [chapters addObject:model];
         }
         chapterRange = range;
@@ -198,6 +203,48 @@
     if (chapterModel.pageCount == 0) {
         [chapterModel updatePage:[SDTXTConfigModel sharedInstance].fontSize bounds:[SDTXTConfigModel sharedInstance].bounds];
     }
+    return [[SDTXTReaderPageViewController alloc] initWithPage:[chapterModel contentOfPage:_pageChange]];
+}
+
+- (UIViewController *)nextChapterViewController {
+    _chapterChange = _chapter;
+    _pageChange = 0;
+    if (_chapterChange >= _chapters.count - 1) {
+        return NULL;
+    }
+    _chapterChange += 1;
+    SDTXTChapterModel *chapterModel = [self chapterAtIndex:_chapterChange];
+    return [[SDTXTReaderPageViewController alloc] initWithPage:[chapterModel contentOfPage:_pageChange]];
+}
+
+- (UIViewController *)lastChapterViewController {
+    _chapterChange = _chapter;
+    _pageChange = 0;
+    if (_chapterChange <= 0) {
+        return NULL;
+    }
+    _chapterChange -= 1;
+    SDTXTChapterModel *chapterModel = [self chapterAtIndex:_chapterChange];
+    return [[SDTXTReaderPageViewController alloc] initWithPage:[chapterModel contentOfPage:_pageChange]];
+}
+
+- (UIViewController *)chapterViewController:(NSInteger)chapter {
+    _chapterChange = chapter;
+    _pageChange = 0;
+    if (_chapterChange < 0 || _chapterChange >= _chapters.count) {
+        return NULL;
+    }
+    SDTXTChapterModel *chapterModel = [self chapterAtIndex:_chapterChange];
+    return [[SDTXTReaderPageViewController alloc] initWithPage:[chapterModel contentOfPage:_pageChange]];
+}
+
+- (UIViewController *)chapterViewController:(NSInteger)chapter offset:(NSInteger)offset {
+    _chapterChange = chapter;
+    if (_chapterChange < 0 || _chapterChange >= _chapters.count) {
+        return NULL;
+    }
+    _pageChange = [_chapters[_chapterChange] pageOfOffset:offset];
+    SDTXTChapterModel *chapterModel = [self chapterAtIndex:_chapterChange];
     return [[SDTXTReaderPageViewController alloc] initWithPage:[chapterModel contentOfPage:_pageChange]];
 }
 

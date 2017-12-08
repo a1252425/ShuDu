@@ -7,21 +7,19 @@
 //
 
 #import "SDTXTReaderLayoutView.h"
-#import "SDTXTReaderAmiatedProtocol.h"
 
 #import "SDTXTReaderTopView.h"
 #import "SDTXTReaderBottomView.h"
+#import "SDTXTReaderMenuView.h"
 
-CGFloat const kSDTXTReaderLayoutAnimateDuration = 0.4f;
+CGFloat const kSDTXTReaderLayoutAnimateDuration = 0.3f;
+CGFloat const kSDTXTReaderLayoutDismissDaly = 3.8f;
 
 @interface SDTXTReaderLayoutView ()
-{
-    NSMutableArray<UIView<SDTXTReaderAmiatedProtocol> *> *_views;
-    SDTXTRecordModel *_recordModel;
-}
 
 @property (nonatomic, strong) SDTXTReaderTopView *topView;
 @property (nonatomic, strong) SDTXTReaderBottomView *bottomView;
+@property (nonatomic, strong) SDTXTReaderMenuView *menuView;
 
 @end
 
@@ -34,13 +32,12 @@ CGFloat const kSDTXTReaderLayoutAnimateDuration = 0.4f;
     return _status;
 }
 
-- (instancetype)initWithRecord:(SDTXTRecordModel *)recordModel
+- (instancetype)init
 {
     self = [super init];
     if (self) {
         
-        _recordModel = recordModel;
-        _views = [NSMutableArray array];
+        self.backgroundColor = [UIColor clearColor];
         
         [self addSubview:self.topView];
         [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -48,15 +45,23 @@ CGFloat const kSDTXTReaderLayoutAnimateDuration = 0.4f;
             make.height.mas_equalTo([UIApplication sharedApplication].statusBarFrame.size.height + 44);
         }];
         
-        [_views addObject:self.topView];
+        [self addSubview:self.bottomView];
+        [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.bottom.right.equalTo(self);
+            make.height.mas_equalTo(self.bottomView.extensionHeight);
+        }];
+        
+        [self addSubview:self.menuView];
+        [self.menuView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
+        }];
     }
     return self;
 }
 
 - (SDTXTReaderTopView *)topView {
     if (!_topView) {
-        _topView = [[SDTXTReaderTopView alloc] initWithRecord:_recordModel];
-        _topView.delegate = self;
+        _topView = [[SDTXTReaderTopView alloc] init];
     }
     return _topView;
 }
@@ -68,37 +73,71 @@ CGFloat const kSDTXTReaderLayoutAnimateDuration = 0.4f;
     return _bottomView;
 }
 
+- (SDTXTReaderMenuView *)menuView {
+    if (!_menuView) {
+        _menuView = [[SDTXTReaderMenuView alloc] init];
+    }
+    return _menuView;
+}
+
+- (void)hide:(id)hidden {
+    [self setHidden:[hidden boolValue]];
+}
+
 #pragma mark - SDTXTReaderLayoutProtocol -
 
 - (void)close {
-    if ([self.delegate respondsToSelector:@selector(close)]) {
-        [self.delegate close];
-    }
+    [self.delegate close];
 }
 
 - (void)updateAppearance {
+    [self resumeSomething];
+    if (_status) {
+        [self.topView show];
+        [self.bottomView show];
+    }else {
+        [self.topView dismiss];
+        [self.bottomView dismiss];
+    }
+    _status = !_status;
+    [self continueSomething];
+    
+    [self.delegate updateAppearance];
+}
+
+- (void)resumeSomething {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    _status = !self.hidden;
-    if (self.hidden) {
-        self.hidden = NO;
-        for (UIView<SDTXTReaderAmiatedProtocol> *view in _views) {
-            [view show];
-        }
-    }
-    else {
-        for (UIView<SDTXTReaderAmiatedProtocol> *view in _views) {
-            [view dismiss];
-        }
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSDTXTReaderLayoutAnimateDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.hidden = YES;
-        });
-    }
+}
+
+- (void)continueSomething {
     if (!_status) {
-        [self performSelector:@selector(updateAppearance) withObject:nil afterDelay:3.8];
+        self.hidden = _status;
+        [self performSelector:@selector(updateAppearance) withObject:nil afterDelay:kSDTXTReaderLayoutDismissDaly];
+    }else{
+        [self performSelector:@selector(hide:) withObject:@(YES) afterDelay:kSDTXTReaderLayoutAnimateDuration];
     }
-    if ([self.delegate respondsToSelector:@selector(updateAppearance)]) {
-        [self.delegate updateAppearance];
-    }
+}
+
+- (void)next {
+    [self.delegate next];
+}
+
+- (void)last {
+    [self.delegate last];
+}
+
+- (void)index:(NSInteger)index {
+    [self.delegate index:index];
+}
+
+- (void)showCatalog {
+    [self.menuView show];
+    [self updateAppearance];
+    [self resumeSomething];
+}
+
+- (void)mark:(NSInteger)chapter offset:(NSInteger)offset {
+    [self.delegate mark:chapter offset:offset];
 }
 
 @end

@@ -103,19 +103,19 @@
 
 //  从其它文件夹添加
 
-- (void)component:(SDFileModel *)component addFile:(NSString *)filePath error:(NSError **)error {
+- (BOOL)component:(SDFileModel *)component addFile:(NSString *)filePath error:(NSError **)error {
     if (component.type != SDFileTypeDirectory) {
-        return;
+        return NO;
     }
     
     NSDictionary *attribute = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:error];
     if (!attribute) {
-        return;
+        return NO;
     }
     
     if (![_db open]) {
         if (*error) *error = _db.lastError;
-        return;
+        return NO;
     }
     
     SDFileModel *fileModel = [[SDFileModel alloc] init];
@@ -132,28 +132,28 @@
         BOOL result = [_db executeUpdate:@"INSERT INTO CATALOG (catalog_pid, catalog_name, catalog_md5, catalog_path, catalog_type, catalog_createtime) VALUES (?, ?, ?, ?, ?)", @(component.ID), fileModel.name, kShuDu_Folder_MD5, fileModel.path, @(fileModel.type), @([[NSDate date] timeIntervalSince1970])];
         if (!result) {
             if (*error) *error = _db.lastError;
-            return;
+            return NO;
         }
         
         //  获取刚插入的id
         FMResultSet *rs = [_db executeQuery:@"SELECT MAX(catalog_id) FROM CATALOG"];
         if (!rs.next) {
             if (*error) *error = _db.lastError;
-            return;
+            return NO;
         }
         fileModel.ID = [rs intForColumn:@"catalog_id"];
         
         //  插入成功后，查看文件夹里面文件，并添加
         NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:filePath error:error];
         if (*error) {
-            return;
+            return NO;
         }
         
         for (NSString *fileName in files) {
             [self component:fileModel addFile:[fileModel.path stringByAppendingPathComponent:fileName] error:error];
         }
         [_db close];
-        return;
+        return YES;
     }
     
     //  查询FILE表中是否存在改MD5的文件
@@ -166,7 +166,7 @@
         NSString *realPath = [kShuDu_File_Path stringByAppendingPathComponent:fileFullName];
         BOOL result = [[NSFileManager defaultManager] copyItemAtPath:filePath toPath:realPath error:error];
         if (!result) {
-            return;
+            return NO;
         }
         NSString *fileName = [fileFullName stringByDeletingPathExtension];
         NSString *extension = fileFullName.pathExtension;
@@ -179,39 +179,39 @@
         result = [_db executeUpdate:@"INSERT INTO FILE (file_name, file_md5, file_path, file_type, file_createtime) VALUES (?, ?, ?, ?, ?)", fileModel.name, fileModel.md5, fileModel.fileRealPath, @(fileModel.type), @([[NSDate date] timeIntervalSince1970])];
         if (!result) {
             if (*error) *error = _db.lastError;
-            return;
+            return NO;
         }
         //  更新CATALOG表
         [_db executeUpdate:@"INSERT INTO CATALOG (catalog_pid, catalog_name, catalog_md5, catalog_path, catalog_type, catalog_createtime) VALUES (?, ?, ?, ?, ?, ?)", @(component.ID), fileModel.name, md5, fileModel.path, @(fileModel.type), @([[NSDate date] timeIntervalSince1970])];
     }
     
-    [_db close];
+    return [_db close];
 }
 
-- (void)component:(SDFileModel *)component addData:(NSData *)data fileName:(NSString *)fileName type:(NSInteger)type error:(NSError **)error {
+- (BOOL)component:(SDFileModel *)component addData:(NSData *)data fileName:(NSString *)fileName type:(NSInteger)type error:(NSError **)error {
     if (!component || !data || !fileName || fileName.length == 0) {
-        return;
+        return NO;
     }
     
     if (![_db open]) {
         if (*error) *error = _db.lastError;
-        return;
+        return NO;
     }
     
     NSString *realPath = [kShuDu_File_Path stringByAppendingPathComponent:fileName];
     if (![data writeToFile:realPath atomically:YES]) {
-        return;
+        return NO;
     }
     NSString *md5 = [SSUtils fileMD5:realPath];
     BOOL result = [_db executeUpdate:@"INSERT INTO FILE (file_name, file_md5, file_path, file_type, file_createtime) VALUES (?, ?, ?, ?, ?)", fileName, md5, realPath, @(type), @([[NSDate date] timeIntervalSince1970])];
     if (!result) {
         if (*error) *error = _db.lastError;
-        return;
+        return NO;
     }
     
     //  更新CATALOG表
     [_db executeUpdate:@"INSERT INTO CATALOG (catalog_pid, catalog_name, catalog_md5, catalog_path, catalog_type, catalog_createtime) VALUES (?, ?, ?, ?, ?, ?)", @(component.ID), fileName, md5, [component.path stringByAppendingPathComponent:fileName], @(type), @([[NSDate date] timeIntervalSince1970])];
-    [_db close];
+    return [_db close];
 }
 
 - (SDFileModel *)rootComponent {
@@ -252,19 +252,19 @@
     return files;
 }
 
-- (void)copyComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error {
+- (BOOL)copyComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error {
     if (toComponent.type != SDFileTypeDirectory) {
-        *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"复制目标不是文件夹")}];
-        return;
+        if (*error) *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"复制目标不是文件夹")}];
+        return NO;
     }
     if ([toComponent isMemberOf:component]) {
-        *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"无法复制")}];
-        return;
+        if (*error) *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"无法复制")}];
+        return NO;
     }
     
     if (![_db open]) {
-        *error =_db.lastError;
-        return;
+        if (*error) *error =_db.lastError;
+        return NO;
     }
     
     if (component.pID == toComponent.ID) {
@@ -292,31 +292,32 @@
         }
     }
     
-    [_db close];
+    return [_db close];
 }
 
-- (void)moveComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error {
+- (BOOL)moveComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error {
     if (component.ID == toComponent.ID || [toComponent isMemberOf:component]) {
-        *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"无法移动")}];
-        return;
+        if (*error) *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"无法移动")}];
+        return NO;
     }
     
     if (toComponent.type != SDFileTypeDirectory) {
-        *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"移动目标不是文件夹")}];
-        return;
+        if (*error) *error = [NSError errorWithDomain:@"FMDB" code:1 userInfo:@{NSLocalizedDescriptionKey: SD(@"移动目标不是文件夹")}];
+        return NO;
     }
     
     if (![_db open]) {
-        *error = [_db lastError];
-        return;
+        if (*error) *error = [_db lastError];
+        return NO;
     }
     
     BOOL result = [_db executeUpdate:@"UPDATE CATALOG SET catalog_pid=? WHERE catalog_id=?", toComponent.ID, component.ID];
+    [_db close];
     if (!result) {
         if (*error) *error = _db.lastError;
+        return NO;
     }
-    
-    [_db close];
+    return result;
 }
 
 @end

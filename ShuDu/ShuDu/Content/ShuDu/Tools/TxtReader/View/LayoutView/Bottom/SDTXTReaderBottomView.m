@@ -8,14 +8,54 @@
 
 #import "SDTXTReaderBottomView.h"
 
+#import "SDTXTReaderNormalView.h"
+
+@interface SDTXTReaderBottomView ()
+{
+    UIView<SDTXTReaderAnimatedProtocol> *_view;
+}
+
+@property (nonatomic, strong) SDTXTReaderNormalView *normalView;;
+
+@end
+
 @implementation SDTXTReaderBottomView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        self.backgroundColor = [UIColor clearColor];
+        
+        _extensionHeight = 190.f;
+        
+        [self addSubview:self.normalView];
+        [self.normalView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.bottom.right.equalTo(self);
+            make.height.mas_equalTo(self.normalView.height);
+        }];
+        
+        _view = self.normalView;
+    }
+    return self;
 }
-*/
+
+- (SDTXTReaderNormalView *)normalView {
+    if (!_normalView) {
+        _normalView = [[SDTXTReaderNormalView alloc] init];
+    }
+    return _normalView;
+}
+
+#pragma mark - SDTXTReaderAnimatedProtocol -
+
+- (void)show {
+    [_view show];
+}
+
+- (void)dismiss {
+    [_view dismiss];
+}
 
 @end

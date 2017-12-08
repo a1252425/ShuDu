@@ -42,6 +42,7 @@
     if (self) {
         _chapter = 0;
         _page = 0;
+        _chapterCount = 1;
         
         _bookmarks = [NSArray array];
     }
@@ -56,7 +57,7 @@
     NSMutableArray *bookmarks = [NSMutableArray arrayWithArray:_bookmarks];
     SDTXTReaderMarkModel *markModel = [_chapterModel markPage:_page];
     if (markModel) [bookmarks addObject:markModel];
-    _bookmarks = bookmarks;
+    self.bookmarks = bookmarks;
     [self cache];
 }
 
@@ -76,7 +77,7 @@
     for (SDTXTReaderMarkModel *markModel in bookMarks) {
         if (markModel.offset >= pageRange.location && markModel.offset <= pageRange.location + pageRange.length) {
             [bookMarks removeObject:markModel];
-            _bookmarks = bookMarks;
+            self.bookmarks = bookMarks;
             [self cache];
             break;
         }

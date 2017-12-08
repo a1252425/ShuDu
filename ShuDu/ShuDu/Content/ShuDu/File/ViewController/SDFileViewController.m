@@ -54,12 +54,6 @@
     [self loadTopView];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    NSLog(@"%@", NSStringFromUIEdgeInsets(_tableView.contentInset));
-}
-
 - (void)loadTopView {
     _topView = [[UIView alloc] init];
     _topView.backgroundColor = [UIColor whiteColor];

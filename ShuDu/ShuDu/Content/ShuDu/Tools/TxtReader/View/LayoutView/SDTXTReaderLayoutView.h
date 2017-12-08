@@ -6,10 +6,11 @@
 //  Copyright © 2017年 邵帅. All rights reserved.
 //
 
-#import "SDTXTReaderView.h"
+#import "SDTXTReaderLayoutProtocol.h"
 
-@interface SDTXTReaderLayoutView : SDTXTReaderView 
+@interface SDTXTReaderLayoutView : UIView <SDTXTReaderLayoutProtocol>
 
 @property (nonatomic, assign) BOOL status;
+@property (nonatomic, weak) id<SDTXTReaderLayoutProtocol> delegate;
 
 @end

@@ -32,4 +32,6 @@
 //  为当前页面做标签
 - (SDTXTReaderMarkModel *)markPage:(NSInteger)page;
 
+- (NSInteger)pageOfOffset:(NSInteger)offset;
+
 @end

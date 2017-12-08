@@ -11,9 +11,11 @@
 #import "UIView+Line.h"
 #import "SDImage.h"
 
+#import "SDTXTReader.h"
 #import "SDTXTConfigModel.h"
 #import "SDTXTReaderMarkModel.h"
 #import "SDTXTRecordModel.h"
+#import "SDTXTReaderLayoutProtocol.h"
 
 #define kSDTXTReaderTopViewHeight   44.f
 
@@ -22,21 +24,16 @@ extern CGFloat const kSDTXTReaderLayoutAnimateDuration;
 @interface SDTXTReaderTopView ()
 {
     UIButton *_storeBt;
-    SDTXTRecordModel *_recordModel;
 }
 
 @end
 
 @implementation SDTXTReaderTopView
 
-@synthesize recordModel = _recordModel;
-
-- (instancetype)initWithRecord:(SDTXTRecordModel *)recordModel
+- (instancetype)init
 {
     self = [super init];
     if (self) {
-        
-        _recordModel = recordModel;
         
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         self.layer.shadowOpacity = 0.1;
@@ -81,8 +78,8 @@ extern CGFloat const kSDTXTReaderLayoutAnimateDuration;
 }
 
 - (void)close {
-    if ([self.delegate respondsToSelector:@selector(close)]) {
-        [self.delegate close];
+    if ([[SDTXTReader sharedInstance].layoutView respondsToSelector:@selector(close)]) {
+        [[SDTXTReader sharedInstance].layoutView close];
     }
 }
 
@@ -90,9 +87,9 @@ extern CGFloat const kSDTXTReaderLayoutAnimateDuration;
     button.selected = !button.selected;
     
     if (button.selected) {
-        [_recordModel addBookmark];
+        [[SDTXTReader sharedInstance].recordModel addBookmark];
     }else
-        [_recordModel deleteBookmark];
+        [[SDTXTReader sharedInstance].recordModel deleteBookmark];
 }
 
 - (void)show {
@@ -111,7 +108,7 @@ extern CGFloat const kSDTXTReaderLayoutAnimateDuration;
 }
 
 - (BOOL)hadMarked {
-    return [_recordModel currentBookMark];
+    return [[SDTXTReader sharedInstance].recordModel currentBookMark] != nil;
 }
 
 @end

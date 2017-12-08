@@ -10,8 +10,12 @@
 
 @interface SDTXTReaderMarkModel : SSModel
 
+@property (nonatomic, assign) NSInteger chapter;
 @property (nonatomic, assign) NSInteger offset;
+
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *content;
+
 @property (nonatomic, copy) NSDate *date;
 
 @end

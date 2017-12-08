@@ -101,13 +101,35 @@
 
 - (SDTXTReaderMarkModel *)markPage:(NSInteger)page {
     if (page >= _pages.count || page < 0) return NULL;
+    
     NSRange range = NSRangeFromString(_pages[page]);
     NSInteger offset = range.location;
-    NSInteger length = range.length > 20 ? 20 : range.length;
+    NSInteger length = range.length > 30 ? 30 : range.length;
+    
     SDTXTReaderMarkModel *markModel = [[SDTXTReaderMarkModel alloc] init];
     markModel.offset = range.location;
+    markModel.chapter = _chapter;
+    markModel.title = _title;
     markModel.content = [_content substringWithRange:NSMakeRange(offset, length)];
+    
     return markModel;
+}
+
+- (NSInteger)pageOfOffset:(NSInteger)offset {
+    if (offset >= _content.length) {
+        return _pageCount-1;
+    }
+    if (offset<=0) {
+        return 0;
+    }
+    NSInteger index = 0;
+    for (; index < _pageCount;index++) {
+        NSRange range = NSRangeFromString(_pages[index]);
+        if (range.location <= offset && range.location + range.length > offset) {
+            break;
+        }
+    }
+    return index;
 }
 
 @end

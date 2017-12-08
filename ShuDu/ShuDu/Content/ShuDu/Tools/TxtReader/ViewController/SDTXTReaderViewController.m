@@ -8,6 +8,7 @@
 
 #import "SDTXTReaderViewController.h"
 
+#import "SDTXTReader.h"
 #import "SDTXTReaderViewModel.h"
 #import "SDTXTChapterModel.h"
 #import "SDFileModel.h"
@@ -15,7 +16,7 @@
 #import "SDTXTReaderLayoutView.h"
 #import "SDTXTReaderLayoutProtocol.h"
 
-@interface SDTXTReaderViewController () <UIPageViewControllerDelegate, UIPageViewControllerDataSource, SDTXTReaderLayoutProtocol>
+@interface SDTXTReaderViewController () <UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIGestureRecognizerDelegate, SDTXTReaderLayoutProtocol>
 {
     SDTXTReaderViewModel *_viewModel;
     SDFileModel *_fileModel;
@@ -35,6 +36,8 @@
         _fileModel = fileModel;
         
         _viewModel = [[SDTXTReaderViewModel alloc] initWithFile:fileModel];
+        [SDTXTReader sharedInstance].recordModel = _viewModel.recordModel;
+        [SDTXTReader sharedInstance].chapters = _viewModel.chapters;
     }
     return self;
 }
@@ -53,11 +56,16 @@
 
 - (SDTXTReaderLayoutView *)layoutView {
     if (!_layoutView) {
-        _layoutView = [[SDTXTReaderLayoutView alloc] initWithRecord:_viewModel.recordModel];
+        _layoutView = [[SDTXTReaderLayoutView alloc] init];
         _layoutView.delegate = self;
         [self.view addSubview:_layoutView];
+        
+        UIEdgeInsets insets = UIEdgeInsetsZero;
+        if (@available(iOS 11.0, *)) {
+            insets = [UIApplication sharedApplication].keyWindow.safeAreaInsets;
+        }
         [_layoutView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.edges.equalTo(self.view).insets(insets);
         }];
     }
     return _layoutView;
@@ -75,14 +83,28 @@
                                        animated:NO
                                      completion:NULL];
     
-    [self layoutView];
+    [SDTXTReader sharedInstance].layoutView = self.layoutView;
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    tap.delegate = self;
     [self.view addGestureRecognizer:tap];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.layoutView updateAppearance];
 }
 
 - (void)tap:(UITapGestureRecognizer *)gesture {
     [self.layoutView updateAppearance];
     [self updateAppearance];
+}
+
+#pragma mark - UIGestureRecognizerDelegate -
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return [touch.view isKindOfClass:NSClassFromString(@"SDTXTReaderPageView")] || [touch.view isKindOfClass:[SDTXTReaderLayoutView class]];
 }
 
 #pragma mark - StatusBar -
@@ -116,11 +138,72 @@
 #pragma mark - SDTXTReaderLayoutProtocol -
 
 - (void)close {
+    [[SDTXTReader sharedInstance] clear];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)updateAppearance {
     [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (void)finishAnimated {
+    [_viewModel finishTransition:YES];
+}
+
+- (void)next {
+    UIViewController *controller = [_viewModel nextChapterViewController];
+    if (!controller) {
+        return;
+    }
+    typeof(self) weakSelf = self;
+    [self.pageViewController setViewControllers:@[controller]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:YES
+                                     completion:^(BOOL finished) {
+                                         [weakSelf finishAnimated];
+                                     }];
+    [_viewModel willTransition];
+}
+
+- (void)last {
+    UIViewController *controller = [_viewModel lastChapterViewController];
+    if (!controller) {
+        return;
+    }
+    typeof(self) weakSelf = self;
+    [self.pageViewController setViewControllers:@[controller]
+                                      direction:UIPageViewControllerNavigationDirectionReverse
+                                       animated:YES
+                                     completion:^(BOOL finished) {
+                                         [weakSelf finishAnimated];
+                                     }];
+    [_viewModel willTransition];
+}
+
+- (void)index:(NSInteger)index {
+    UIViewController *controller = [_viewModel chapterViewController:index];
+    if (!controller) {
+        return;
+    }
+    [self.pageViewController setViewControllers:@[controller]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO
+                                     completion:NULL];
+    [_viewModel willTransition];
+    [_viewModel finishTransition:YES];
+}
+
+- (void)mark:(NSInteger)chapter offset:(NSInteger)offset {
+    UIViewController *controller = [_viewModel chapterViewController:chapter offset:offset];
+    if (!controller) {
+        return;
+    }
+    [self.pageViewController setViewControllers:@[controller]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO
+                                     completion:NULL];
+    [_viewModel willTransition];
+    [_viewModel finishTransition:YES];
 }
 
 @end

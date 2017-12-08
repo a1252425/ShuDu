@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SDTXTReaderAnimatedProtocol.h"
 
-@interface SDTXTReaderBottomView : UIView
+@interface SDTXTReaderBottomView : UIView <SDTXTReaderAnimatedProtocol>
+
+@property (nonatomic, assign) CGFloat extensionHeight;
 
 @end

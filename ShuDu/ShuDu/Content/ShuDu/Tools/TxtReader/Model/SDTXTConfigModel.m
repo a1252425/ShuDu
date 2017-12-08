@@ -24,10 +24,10 @@
     static dispatch_once_t onceToken;
     static SDTXTConfigModel *model;
     dispatch_once(&onceToken, ^{
-        NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:kSDTXTConfigModelArchiveKey];
-        if (data) {
-            model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        }else
+//        NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:kSDTXTConfigModelArchiveKey];
+//        if (data) {
+//            model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//        }else
             model = [[SDTXTConfigModel alloc] init];
     });
     return model;
@@ -37,12 +37,15 @@
 {
     self = [super init];
     if (self) {
+        //  font attribute
         _lineSpace = 10.f;
         _fontSize = 14.f;
-        _leftSpace = 10.f;
-        _topSpace = [UIApplication sharedApplication].statusBarFrame.size.height + 12;
-        _rightSpace = 10.f;
-        _bottomSpace = 10.f;
+        
+        //  content insets
+        _leftSpace =    10.f ;
+        _topSpace =     28.f ;
+        _rightSpace =   10.f ;
+        _bottomSpace =  10.f ;
         
         _fontColor = [UIColor blackColor];
         _themeColor = [UIColor colorWithRed:250.f/255.f green:250.f/255.f blue:250.f/255.f alpha:1];

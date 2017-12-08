@@ -15,8 +15,8 @@
 + (instancetype)sharedInstance;
 
 //  增
-- (void)component:(SDFileModel *)component addFile:(NSString *)filePath error:(NSError **)error;
-- (void)component:(SDFileModel *)component addData:(NSData *)data fileName:(NSString *)fileName type:(NSInteger)type error:(NSError **)error;
+- (BOOL)component:(SDFileModel *)component addFile:(NSString *)filePath error:(NSError **)error;
+- (BOOL)component:(SDFileModel *)component addData:(NSData *)data fileName:(NSString *)fileName type:(NSInteger)type error:(NSError **)error;
 
 //  删
 
@@ -25,7 +25,7 @@
 - (NSArray<SDFileModel *> *)componentsOfFile:(SDFileModel *)fileModel;
 
 //  改
-- (void)copyComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error;
-- (void)moveComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error;
+- (BOOL)copyComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error;
+- (BOOL)moveComponent:(SDFileModel *)component to:(SDFileModel *)toComponent error:(NSError **)error;
 
 @end

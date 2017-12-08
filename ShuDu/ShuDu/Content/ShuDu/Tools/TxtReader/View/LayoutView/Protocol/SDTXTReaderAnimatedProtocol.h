@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol SDTXTReaderAmiatedProtocol <NSObject>
+@protocol SDTXTReaderAnimatedProtocol <NSObject>
 
 - (void)show;
 - (void)dismiss;

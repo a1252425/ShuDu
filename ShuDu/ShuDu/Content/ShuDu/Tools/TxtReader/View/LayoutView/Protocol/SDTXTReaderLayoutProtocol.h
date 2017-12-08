@@ -18,4 +18,20 @@
 //  更新UI
 - (void)updateAppearance;
 
+//  UI操作影响暂停
+- (void)resumeSomething;
+
+//  UI操作影响继续
+- (void)continueSomething;
+
+//  进度
+- (void)next;
+- (void)last;
+- (void)index:(NSInteger)index;
+
+//  目录
+- (void)showCatalog;
+
+- (void)mark:(NSInteger)chapter offset:(NSInteger)offset;
+
 @end

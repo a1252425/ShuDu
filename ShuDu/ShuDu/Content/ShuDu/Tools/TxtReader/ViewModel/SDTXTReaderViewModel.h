@@ -25,4 +25,9 @@
 - (void)finishTransition:(BOOL)completed;
 - (void)willTransition;
 
+- (UIViewController *)nextChapterViewController;
+- (UIViewController *)lastChapterViewController;
+- (UIViewController *)chapterViewController:(NSInteger)chapter;
+- (UIViewController *)chapterViewController:(NSInteger)chapter offset:(NSInteger)offset;
+
 @end
